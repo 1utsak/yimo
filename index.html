@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Їмо разом</title>
+<meta name="theme-color" content="#16201A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Їмо разом">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: one mobile column — two people side by side on top, then adding, the day log, the product base. */
+:root{
+  color-scheme:light;
+  --bg:#EEF2EE; --surface:#FFFFFF; --sunk:#F5F8F5; --ink:#16201A; --muted:#5D6A62; --line:#D9E1DA;
+  --vlad:#2B57D0; --vika:#CF2F68; --prot:#13936180; --protS:#139361; --fat:#D48C0E; --carb:#6E4FE6; --over:#D2410C;
+  --primary:#16201A; --onprimary:#FFFFFF;
+  --f-display:"Unbounded", "Onest", system-ui, sans-serif;
+  --f-body:"Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1310; --surface:#172019; --sunk:#121A15; --ink:#E7EEE9; --muted:#93A399; --line:#28342C;
+  --vlad:#6F95FF; --vika:#FF6A9C; --protS:#36C88A; --fat:#F0B13E; --carb:#9C85FF; --over:#FF7A45;
+  --primary:#E7EEE9; --onprimary:#0E1310; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1310; --surface:#172019; --sunk:#121A15; --ink:#E7EEE9; --muted:#93A399; --line:#28342C;
+  --vlad:#6F95FF; --vika:#FF6A9C; --protS:#36C88A; --fat:#F0B13E; --carb:#9C85FF; --over:#FF7A45;
+  --primary:#E7EEE9; --onprimary:#0E1310; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:16px 48px}
+.app{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1,h2,h3{margin:0;text-wrap:balance}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--vlad);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.brand h1{font-family:var(--f-display);font-weight:700;font-size:26px;letter-spacing:-.01em}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.datebar{display:flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.datebar button{border:0;background:transparent;width:34px;height:34px;border-radius:50%;font-size:20px;line-height:1}
+.datebar button:hover{background:var(--sunk)}
+#dateLabel{min-width:150px;text-align:center;font-weight:600;font-size:14px}
+.toprow{display:flex;gap:8px;align-items:center}
+
+.banner{background:var(--sunk);border:1px dashed var(--line);border-radius:var(--r);padding:10px 14px;font-size:13px;color:var(--muted)}
+
+.people{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.person{background:var(--surface);border-radius:var(--r);padding:14px 12px 12px;display:flex;flex-direction:column;gap:10px;min-width:0;border-top:4px solid var(--pc)}
+.person.vlad{--pc:var(--vlad)} .person.vika{--pc:var(--vika)}
+.person header{display:flex;justify-content:space-between;align-items:center}
+.person h2{font-family:var(--f-display);font-size:17px;font-weight:700;color:var(--pc)}
+.ring{position:relative;width:100%;max-width:190px;margin:0 auto;aspect-ratio:1}
+.ring svg{width:100%;height:100%;display:block}
+.ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ring .big{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,6.4vw,30px);line-height:1}
+.ring .of{font-size:12px;color:var(--muted);margin-top:4px}
+.ring .left{font-size:12px;font-weight:600;margin-top:6px;padding:2px 8px;border-radius:999px;background:var(--sunk)}
+.ring .left.over{color:var(--over)}
+.macros{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.mac{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.mac .mring{position:relative;width:100%;max-width:56px;aspect-ratio:1}
+.mac .mring svg{width:100%;height:100%;display:block}
+.mac .mring b{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;font-weight:700}
+.mac .mv{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.mac .mv strong{color:var(--ink);font-weight:600}
+
+.panel{background:var(--surface);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:12px}
+.sechead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.sechead h2{font-family:var(--f-display);font-size:16px;font-weight:500}
+.tabs{display:flex;gap:4px;background:var(--sunk);border-radius:12px;padding:4px}
+.tabs button{flex:1;border:0;background:transparent;padding:8px 6px;border-radius:9px;font-weight:600;font-size:14px;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgb(0 0 0 / .08)}
+
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label{font-size:12px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:6px;letter-spacing:.01em}
+input,select,textarea{background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:10px 11px;width:100%;min-width:0}
+textarea{min-height:120px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--vlad)}
+.row{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px}
+.vlad-l{color:var(--vlad)!important} .vika-l{color:var(--vika)!important}
+.search{position:relative}
+.sugg{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;z-index:5;max-height:320px;overflow:auto;box-shadow:0 10px 30px rgb(0 0 0 / .15)}
+.sugg button{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-bottom:1px solid var(--line)}
+.sugg button:last-child{border-bottom:0}
+.sugg button:hover,.sugg button.hi{background:var(--sunk)}
+.sugg small{color:var(--muted);white-space:nowrap}
+.sugg .ask{color:var(--carb);font-weight:600}
+.selinfo{font-size:13px;color:var(--muted);background:var(--sunk);border-radius:10px;padding:9px 11px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.selinfo strong{color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.mini{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 9px;font-size:12px;font-weight:600}
+.mini:hover{background:var(--sunk)}
+.calc{display:flex;gap:8px;flex-wrap:wrap;font-size:13px}
+.calc span{background:var(--sunk);border-radius:999px;padding:4px 10px}
+.primary{background:var(--primary);color:var(--onprimary);border:0;border-radius:12px;padding:12px 16px;font-weight:700}
+.primary:disabled{opacity:.4;cursor:default}
+.ghost{border:1px solid var(--line);background:transparent;border-radius:10px;padding:6px 10px;font-size:13px;font-weight:600}
+.ghost:hover{background:var(--sunk)}
+.danger{color:var(--over)}
+.hint{font-size:12.5px;color:var(--muted);margin:0}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.thinking{font-size:13px;color:var(--carb);font-weight:600}
+.photoprev{max-height:200px;border-radius:12px;object-fit:cover}
+
+.preview{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:10px}
+.prow{background:var(--sunk);border-radius:12px;padding:10px;display:grid;grid-template-columns:1fr auto;gap:8px}
+.prow .pmain{display:grid;grid-template-columns:1fr 120px;gap:6px;min-width:0}
+.prow .pg{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.prow .p100{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.prow .pfull{grid-column:1/-1;display:flex;flex-direction:column;gap:6px;min-width:0}
+.prow input,.prow select{padding:7px 8px;font-size:14px;background:var(--surface)}
+.prow .tag{font-size:11px;color:var(--muted)}
+.xbtn{border:0;background:transparent;font-size:20px;line-height:1;color:var(--muted);align-self:start}
+
+.meal{display:flex;flex-direction:column;gap:6px}
+.meal h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;display:flex;justify-content:space-between}
+.item{display:flex;flex-direction:column;gap:6px;width:100%;text-align:left;background:var(--sunk);border:1px solid transparent;border-radius:12px;padding:10px 12px}
+.item:hover{border-color:var(--line)}
+.item .iname{font-weight:600}
+.item .ipp{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-size:12.5px;border-radius:999px;padding:2px 9px;background:var(--surface);white-space:nowrap}
+.pill.vlad{color:var(--vlad)} .pill.vika{color:var(--vika)}
+.pill.off{opacity:.45}
+.empty{color:var(--muted);font-size:14px;text-align:center;padding:18px 8px;background:var(--sunk);border-radius:12px}
+
+.base{display:flex;flex-direction:column}
+.bitem{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border:0;border-bottom:1px solid var(--line);background:transparent;text-align:left;padding:9px 2px}
+.bitem:hover{background:var(--sunk)}
+.bitem .bn{min-width:0}
+.bitem .bv{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.badge{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+.badge.edit{background:color-mix(in srgb, var(--fat) 20%, transparent);color:var(--fat)}
+.badge.claude{background:color-mix(in srgb, var(--carb) 18%, transparent);color:var(--carb)}
+.badge.off{background:color-mix(in srgb, var(--vlad) 16%, transparent);color:var(--vlad)}
+.syncstate{font-size:11px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+.syncstate.on{color:var(--protS);border-color:color-mix(in srgb, var(--protS) 40%, transparent)}
+.badge.own{background:color-mix(in srgb, var(--protS) 18%, transparent);color:var(--protS)}
+
+.overlay{position:fixed;inset:0;background:rgb(0 0 0 / .45);z-index:20;display:flex;align-items:flex-end;justify-content:center;
+  padding:12px max(12px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px))}
+.sheet{background:var(--surface);border-radius:18px;padding:16px;width:100%;max-width:520px;max-height:88vh;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.sheet h3{font-family:var(--f-display);font-size:16px;font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.goalbox{border-left:4px solid var(--pc);padding-left:10px;display:flex;flex-direction:column;gap:8px}
+.goalbox.vlad{--pc:var(--vlad)} .goalbox.vika{--pc:var(--vika)}
+.goalbox h4{margin:0;color:var(--pc)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom, 0px));background:var(--primary);color:var(--onprimary);padding:10px 16px;border-radius:999px;font-weight:600;font-size:14px;z-index:30;max-width:calc(100% - 32px)}
+@media (max-width:420px){
+  .row{grid-template-columns:1fr 1fr}.row .field:first-child{grid-column:1/-1}
+  .prow .pmain{grid-template-columns:1fr}
+  .grid4{grid-template-columns:1fr 1fr}
+  #dateLabel{min-width:120px}
+}
+@media (prefers-reduced-motion: no-preference){.ring circle.arc,.mring circle.arc{transition:stroke-dasharray .5s ease}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand"><h1>Їмо разом</h1><p>Калорії та БЖВ для Влада й Віки · <span id="syncState" class="syncstate">лише цей телефон</span></p></div>
+    <div class="toprow">
+      <div class="datebar"><button id="prevDay" aria-label="Попередній день">‹</button><div id="dateLabel" class="num"></div><button id="nextDay" aria-label="Наступний день">›</button></div>
+      <button id="goalsBtn" class="ghost">Цілі</button><button id="settingsBtn" class="ghost" aria-label="Налаштування">⚙︎</button>
+    </div>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <section class="people" id="people"></section>
+
+  <section class="panel">
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="manual" aria-selected="true">Додати</button>
+      <button role="tab" data-tab="note" aria-selected="false">Нотатка</button>
+      <button role="tab" data-tab="photo" aria-selected="false">Фото</button>
+    </div>
+
+    <div id="tab-manual" style="display:flex;flex-direction:column;gap:10px">
+      <div class="field search">
+        <label for="q">Продукт</label>
+        <input id="q" autocomplete="off" placeholder="Почніть вводити: гречка, яйце, банан…">
+        <div id="sugg" class="sugg" hidden></div>
+      </div>
+      <div id="selInfo" class="selinfo">Оберіть продукт зі списку. Якщо його немає, знайдіть в Open Food Facts або запитайте ШІ.</div>
+      <div class="row">
+        <div class="field"><label for="meal">Прийом їжі</label><select id="meal"></select></div>
+        <div class="field"><label for="gVlad" class="vlad-l">Влад, г</label><input id="gVlad" inputmode="decimal" placeholder="0"></div>
+        <div class="field"><label for="gVika" class="vika-l">Віка, г <button id="ratioBtn" class="mini" type="button" title="Порція Віки від Владової">70%</button></label><input id="gVika" inputmode="decimal" placeholder="0"></div>
+      </div>
+      <div id="pcChips" class="chips" hidden></div>
+      <div id="addCalc" class="calc"></div>
+      <button id="addBtn" class="primary" disabled>Додати в день</button>
+    </div>
+
+    <div id="tab-note" hidden style="flex-direction:column;gap:10px">
+      <div class="field">
+        <label for="noteText">Вставте нотатку за день</label>
+        <textarea id="noteText" placeholder="Сніданок: вівсянка Влад 80 г, Віка 50 г, банан обоє, кава з молоком&#10;Обід: борщ, Влад тарілка 400, Віка 300; хліб 2 шматки і 1&#10;Вечеря: курка з рисом"></textarea>
+      </div>
+      <p class="hint">Пишіть як зручно. Якщо не сказано, чия порція, програма рахує обох: Віці частку від Владової (налаштовується в «Цілях»). На Android, якщо додали застосунок на екран, можна з Нотаток натиснути «Поділитися» → «Їмо разом». На iPhone: Поділитися → Скопіювати і вставити сюди. Записи підуть у день, вибраний угорі.</p>
+      <div class="btnrow"><button id="parseBtn" class="primary" type="button">Розібрати нотатку</button><span id="noteStatus" class="thinking"></span></div>
+    </div>
+
+    <div id="tab-photo" hidden style="flex-direction:column;gap:10px">
+      <div class="field"><label for="photoFile">Фото тарілки чи столу</label><input id="photoFile" type="file" accept="image/*"></div>
+      <img id="photoPrev" class="photoprev" alt="Вибране фото" hidden>
+      <div class="field"><label for="photoWho">Чия це їжа</label>
+        <select id="photoWho"><option value="both">Обох: розділити на двох</option><option value="vlad">Тільки Влада</option><option value="vika">Тільки Віки</option></select></div>
+      <div class="field"><label for="photoNote">Що на фото (необов'язково)</label><textarea id="photoNote" style="min-height:70px" placeholder="Наприклад: гречка з курячим стегном, соус сметанний. Велика тарілка Влада, мала Віки. Хліб не їли."></textarea></div>
+      <p class="hint">Бета. ШІ оцінює вагу за фото, вашим поясненням і звичними порціями з історії. Перевірте грами перед додаванням.</p>
+      <div class="btnrow"><button id="photoBtn" class="primary" disabled>Оцінити фото</button><span id="photoStatus" class="thinking"></span></div>
+    </div>
+
+    <div id="preview" class="preview" hidden></div>
+  </section>
+
+  <section class="panel">
+    <div class="sechead"><h2>Що з'їли</h2><span id="logSum" class="hint num"></span></div>
+    <div id="log" style="display:flex;flex-direction:column;gap:12px"></div>
+  </section>
+
+  <section class="panel">
+    <div class="sechead"><h2>База продуктів</h2><button id="newProduct" class="ghost">+ Свій продукт</button></div>
+    <input id="baseSearch" placeholder="Пошук у базі" autocomplete="off">
+    <p class="hint">Усе на 100 г. Натисніть продукт, щоб поправити БЖВ.</p>
+    <div id="baseList" class="base"></div>
+  </section>
+</div>
+
+<div id="modal" class="overlay" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+<div id="toast" class="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
