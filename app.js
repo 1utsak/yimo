@@ -41,7 +41,14 @@ const BUILTIN = [
 
 // ---------- config
 // Firebase config is public by design (access is controlled by Firestore rules). Fill in to enable sync.
-const FIREBASE_CONFIG = null;
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyB1nVDuIGm6PsHMWXWeyBgR91ysudoruGU",
+  authDomain: "eatt-a2e91.firebaseapp.com",
+  projectId: "eatt-a2e91",
+  storageBucket: "eatt-a2e91.firebasestorage.app",
+  messagingSenderId: "995134492839",
+  appId: "1:995134492839:web:61a26bd25bfae6aefdcb82"
+};
 // tried in order; an overloaded or retired model falls through to the next
 const MODELS_TEXT = ["gemini-3.5-flash-lite", "gemini-flash-lite-latest", "gemini-3.5-flash", "gemini-flash-latest"];
 const MODELS_PHOTO = ["gemini-3.5-flash", "gemini-flash-latest", "gemini-3.5-flash-lite", "gemini-flash-lite-latest"];
