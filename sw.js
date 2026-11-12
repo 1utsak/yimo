@@ -1,5 +1,5 @@
 // Network-first for the app shell, so updates arrive at once; cached copy when offline.
-const C = "yimo-v2", SHELL = ["./", "index.html", "app.js", "manifest.webmanifest", "icon.svg", "icon-192.png"];
+const C = "yimo-v4", SHELL = ["./", "index.html", "app.js", "manifest.webmanifest", "icon.svg", "icon-192.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(C).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== C).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {
